@@ -1,25 +1,18 @@
 package br.com.facec.programacao2.model;
 
-import br.com.facec.programacao2.exceptions.CampoObrigatorioException;
+import br.com.facec.programacao2.others.Validavel;
 
-public class Pessoa {
+import static br.com.facec.programacao2.exceptions.ValidacaoUtil.validarCampoObrigatorio;
 
-    private Long id;
+public class Pessoa extends Entidade implements Validavel {
+
     private String nome;
 
+    @Override
     public void validar() {
-        if(this.nome == null
-                ||  this.nome.isEmpty()) {
-            throw new CampoObrigatorioException("O nome é obrigatório");
-        }
-    }
+        validarCampoObrigatorio(nome,
+                "Nome é obrigatório.");
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -33,7 +26,7 @@ public class Pessoa {
     @Override
     public String toString() {
         return "Pessoa{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", nome='" + nome + '\'' +
                 '}';
     }
