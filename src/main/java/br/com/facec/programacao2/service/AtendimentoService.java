@@ -4,6 +4,8 @@ import br.com.facec.programacao2.model.Atendimento;
 import br.com.facec.programacao2.model.Pessoa;
 import br.com.facec.programacao2.repository.AtendimentoRepository;
 
+import java.util.List;
+
 public class AtendimentoService {
 
     private AtendimentoRepository atendimentoRepository = new AtendimentoRepository();
@@ -18,9 +20,27 @@ public class AtendimentoService {
         return atendimento;
     }
 
+    public Atendimento atualizar(Atendimento atendimento, String descricaoProblema, Pessoa funcionario) {
+        if(descricaoProblema != null) {
+            atendimento.setDescricaoProblema(descricaoProblema);
+        }
+
+        if(funcionario != null) {
+            atendimento.setFuncionario(funcionario);
+        }
+
+        atendimentoRepository.atualizar(atendimento);
+
+        return atendimento;
+    }
+
     public void encerrar(Atendimento atendimento) {
         atendimento.encerrar();
         atendimentoRepository.atualizar(atendimento);
+    }
+
+    public List<Atendimento> buscarTodos() {
+        return atendimentoRepository.buscarTodos();
     }
 
 }

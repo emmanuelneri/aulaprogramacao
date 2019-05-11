@@ -63,7 +63,8 @@ public class Atendimento extends Entidade implements Validavel {
     @Override
     public String toString() {
         return "Atendimento{" +
-                "cliente=" + cliente +
+                "id=" + getId() +
+                ", cliente=" + cliente +
                 ", funcionario=" + funcionario +
                 ", descricaoProblema='" + descricaoProblema + '\'' +
                 ", dataHora=" + dataHora +
