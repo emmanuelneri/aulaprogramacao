@@ -5,22 +5,26 @@ import br.com.facec.programacao2.model.Pessoa;
 import br.com.facec.programacao2.service.AtendimentoService;
 import br.com.facec.programacao2.service.PessoaService;
 
+import java.util.List;
+
 public class Application {
 
 
     public static void main(String[] args) {
 
         Pessoa funcionario = new Pessoa();
-        funcionario.setId(1L);
         funcionario.setNome("Funcionario I");
 
         Pessoa cliente = new Pessoa();
-        cliente.setId(1L);
         cliente.setNome("Cliente I");
 
-        System.out.println("----------");
-
+        PessoaService pessoaService = new PessoaService();
         AtendimentoService atendimentoService = new AtendimentoService();
+
+        System.out.println("----------Ações--------------");
+
+        pessoaService.salvar(funcionario);
+        pessoaService.salvar(cliente);
 
         Atendimento atendimento = atendimentoService.inicializar(
                 cliente,
@@ -41,7 +45,15 @@ public class Application {
                 "Problema z",
                 funcionario);
 
-        System.out.println(atendimentoService.buscarTodos());
+        atendimentoService.encerrar(atendimento3);
+
+        System.out.println("----------Todos atendimentos-------------");
+
+        List<Atendimento> atendimentos = atendimentoService.buscarTodos();
+
+        for (Atendimento atendimentoLista: atendimentos) {
+            System.out.println(atendimentoLista);
+        }
 
 
     }
