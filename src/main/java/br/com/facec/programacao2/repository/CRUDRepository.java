@@ -23,7 +23,7 @@ public abstract class CRUDRepository<T extends Entidade> {
         this.entidades.remove(posicaoEntidade.intValue());
         this.entidades.add(posicaoEntidade, entidade);
 
-        System.out.println("Pessoa atualizada com sucesso! " + entidade);
+        System.out.println("Entidade atualizada com sucesso! " + entidade);
     }
 
     private Integer getPosicaoElemento(Long id) {

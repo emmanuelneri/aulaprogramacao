@@ -1,6 +1,8 @@
 package br.com.facec.programacao2.model;
 
-public abstract class Entidade {
+import br.com.facec.programacao2.others.Validavel;
+
+public abstract class Entidade implements Validavel {
 
     private Long id;
 

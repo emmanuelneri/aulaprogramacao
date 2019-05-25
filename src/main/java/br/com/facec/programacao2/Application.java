@@ -1,30 +1,32 @@
 package br.com.facec.programacao2;
 
 import br.com.facec.programacao2.model.Atendimento;
-import br.com.facec.programacao2.model.Pessoa;
+import br.com.facec.programacao2.model.Cliente;
+import br.com.facec.programacao2.model.Funcionario;
 import br.com.facec.programacao2.service.AtendimentoService;
-import br.com.facec.programacao2.service.PessoaService;
+import br.com.facec.programacao2.service.ClienteService;
+import br.com.facec.programacao2.service.FuncionarioService;
 
 import java.util.List;
 
 public class Application {
 
-
     public static void main(String[] args) {
 
-        Pessoa funcionario = new Pessoa();
-        funcionario.setNome("Funcionario I");
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome("FuncionarioRepository I");
 
-        Pessoa cliente = new Pessoa();
+        Cliente cliente = new Cliente();
         cliente.setNome("Cliente I");
 
-        PessoaService pessoaService = new PessoaService();
+        FuncionarioService funcionarioService = new FuncionarioService();
+        ClienteService clienteService = new ClienteService();
         AtendimentoService atendimentoService = new AtendimentoService();
 
         System.out.println("----------Ações--------------");
 
-        pessoaService.salvar(funcionario);
-        pessoaService.salvar(cliente);
+        funcionarioService.salvar(funcionario);
+        clienteService.salvar(cliente);
 
         Atendimento atendimento = atendimentoService.inicializar(
                 cliente,

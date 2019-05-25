@@ -4,7 +4,7 @@ import br.com.facec.programacao2.others.Validavel;
 
 import static br.com.facec.programacao2.exceptions.ValidacaoUtil.validarCampoObrigatorio;
 
-public class Pessoa extends Entidade implements Validavel {
+public class Pessoa extends Entidade {
 
     private String nome;
 
