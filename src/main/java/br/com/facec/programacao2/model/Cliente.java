@@ -5,8 +5,8 @@ public class Cliente extends Pessoa {
     @Override
     public String toString() {
         return "Cliente {" +
-                "id: " + getId() +
-                "nome: " + getNome() +
+                " id: " + getId() +
+                " nome: " + getNome() +
                 "}";
     }
 }

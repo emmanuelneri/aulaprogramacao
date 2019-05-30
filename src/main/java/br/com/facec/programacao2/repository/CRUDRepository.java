@@ -1,65 +1,31 @@
 package br.com.facec.programacao2.repository;
 
-import br.com.facec.programacao2.exceptions.ElementoNaoEncontradoExpcetion;
-import br.com.facec.programacao2.model.Entidade;
-import br.com.facec.programacao2.others.Validavel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+public abstract class CRUDRepository {
 
-public abstract class CRUDRepository<T extends Entidade> {
+    private final static String URL = "jdbc:postgresql://localhost:5432/aulaprogramacao";
+    private final static String USUARIO = "postgres";
+    private final static String SENHA = "postgres";
 
-    private List<T> entidades = new ArrayList<>();
-
-    public void criar(T entidade) {
-        entidade.setId(new Random().nextLong());
-        this.entidades.add(entidade);
-        System.out.println("Entidade criada com sucesso! " + entidade);
-    }
-
-    public void atualizar(T entidade) {
-        Integer posicaoEntidade = getPosicaoElemento(entidade.getId());
-        this.entidades.remove(posicaoEntidade.intValue());
-        this.entidades.add(posicaoEntidade, entidade);
-
-        System.out.println("Entidade atualizada com sucesso! " + entidade);
-    }
-
-    private Integer getPosicaoElemento(Long id) {
-        Integer posicaoEntidade = null;
-
-        for(int i = 0; i < entidades.size(); i++) {
-            T entidadeDaLista = entidades.get(i);
-            if(entidadeDaLista.getId().equals(id)) {
-                posicaoEntidade = i;
-                break;
-            }
+    protected Connection criarConexao() {
+        try {
+            return DriverManager
+                    .getConnection(URL, USUARIO, SENHA);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao conectar ao banco de dados");
         }
+    }
 
-        if(posicaoEntidade == null) {
-            throw new ElementoNaoEncontradoExpcetion("Elemento não encontrado: " + id);
+    protected PreparedStatement criarDeclaracaoPreparada(Connection conexao, String sql) {
+        try {
+            return conexao.prepareStatement(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro criar a declaracao preparada ao banco de dados", e);
         }
-        return posicaoEntidade;
     }
-
-    public void deletar(Long id) {
-        Integer posicaoEntidade = getPosicaoElemento(id);
-        this.entidades.remove(posicaoEntidade.intValue());
-        System.out.println("Entidade excluído com sucesso! " + id);
-    }
-
-    public T buscarPorId(Long id) {
-        for (T entidade : entidades) {
-            if (entidade.getId().equals(id)) {
-                return entidade;
-            }
-        }
-        throw new ElementoNaoEncontradoExpcetion("Elemento não encontrado: " + id);
-    }
-
-    public List<T> buscarTodos() {
-        return new ArrayList<>(entidades);
-    }
-
 }

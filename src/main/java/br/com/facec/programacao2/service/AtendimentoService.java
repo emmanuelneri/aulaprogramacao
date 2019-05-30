@@ -4,6 +4,7 @@ import br.com.facec.programacao2.model.Atendimento;
 import br.com.facec.programacao2.model.Pessoa;
 import br.com.facec.programacao2.repository.AtendimentoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AtendimentoService {
@@ -16,7 +17,7 @@ public class AtendimentoService {
         atendimento.setFuncionario(funcionario);
         atendimento.setDescricaoProblema(descricaoProblema);
         atendimento.validar();
-        atendimentoRepository.criar(atendimento);
+//        atendimentoRepository.criar(atendimento);
         return atendimento;
     }
 
@@ -29,18 +30,19 @@ public class AtendimentoService {
             atendimento.setFuncionario(funcionario);
         }
 
-        atendimentoRepository.atualizar(atendimento);
+//        atendimentoRepository.atualizar(atendimento);
 
         return atendimento;
     }
 
     public void encerrar(Atendimento atendimento) {
         atendimento.encerrar();
-        atendimentoRepository.atualizar(atendimento);
+//        atendimentoRepository.atualizar(atendimento);
     }
 
     public List<Atendimento> buscarTodos() {
-        return atendimentoRepository.buscarTodos();
+//        return atendimentoRepository.buscarTodos();
+        return new ArrayList<>();
     }
 
 }
