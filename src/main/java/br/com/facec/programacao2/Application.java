@@ -1,8 +1,12 @@
 package br.com.facec.programacao2;
 
 import br.com.facec.programacao2.model.Cliente;
+import br.com.facec.programacao2.model.Funcionario;
 import br.com.facec.programacao2.repository.ClienteRepository;
+import br.com.facec.programacao2.repository.FuncionarioRepository;
 import br.com.facec.programacao2.repository.InicializacaoRepository;
+
+import java.util.List;
 
 public class Application {
 
@@ -12,16 +16,17 @@ public class Application {
                 = new InicializacaoRepository();
 
         inicializacaoRepository.criarTabelaCliente();
+        inicializacaoRepository.criarTabelaFuncionario();
 
-        ClienteRepository clienteRepository
-                = new ClienteRepository();
-
-        Cliente cliente = new Cliente();
-        cliente.setNome("Cliente 1");
-
-        clienteRepository.criar(cliente);
-
-        System.out.println(cliente);
+//        ClienteRepository clienteRepository
+//                = new ClienteRepository();
+//
+//        Cliente cliente = new Cliente();
+//        cliente.setNome("Cliente 1");
+//
+//        clienteRepository.criar(cliente);
+//
+//        System.out.println(cliente);
 
 //        List<Cliente> clientes = clienteRepository.buscarTodos();
 //
@@ -36,6 +41,28 @@ public class Application {
 //
 //        Cliente clienteBuscadoPorId = clienteRepository.buscarPorId(2L);
 //        System.out.println(clienteBuscadoPorId);
+
+        FuncionarioRepository funcionarioRepository = new FuncionarioRepository();
+
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome("Funcionario");
+
+        funcionarioRepository.criar(funcionario);
+
+        funcionario.setNome("Funcionario Alterado");
+        funcionarioRepository.atualizar(funcionario);
+
+        System.out.println(funcionario);
+
+        funcionarioRepository.deletar(1L);
+
+
+        System.out.println("---------------TODOS funcionários---------");
+
+        funcionarioRepository.buscarTodos()
+                .forEach(System.out::println);
+
+        System.out.println("------------------------------------");
     }
 
 }

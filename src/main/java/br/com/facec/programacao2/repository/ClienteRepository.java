@@ -1,5 +1,6 @@
 package br.com.facec.programacao2.repository;
 
+import br.com.facec.programacao2.db.FabricaDeConexao;
 import br.com.facec.programacao2.model.Cliente;
 import br.com.facec.programacao2.repository.mapeadores.MapeadorCliente;
 
@@ -10,11 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteRepository extends CRUDRepository {
+public class ClienteRepository extends CRUDRepository<Cliente> {
 
+    @Override
     public Cliente criar(Cliente cliente) {
-        Connection conexao = criarConexao();
-        try {
+        try(final Connection conexao = FabricaDeConexao.criarConexao()) {
             final String sql = "insert into cliente (nome) values (?)";
 
             String colunasParaRetornar[]= {"id"};
@@ -30,21 +31,18 @@ public class ClienteRepository extends CRUDRepository {
             if(colunasRetornadas.next()) {
                 cliente.setId(colunasRetornadas.getLong(1));
             }
-
-            declaracaoPreparada.close();
-            conexao.close();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erro ao conectar ao banco de dados");
+            throw new RuntimeException("Erro ao conectar ao banco de dados", e);
         }
 
         return cliente;
     }
 
-    public void atualizar(Cliente cliente) {
+    @Override
+    public Cliente atualizar(Cliente cliente) {
         String sql = "update cliente set nome = ? where id = ?";
 
-        Connection conexao = criarConexao();
+        Connection conexao = FabricaDeConexao.criarConexao();
         PreparedStatement declaracaoPreparada =
                 criarDeclaracaoPreparada(conexao, sql);
 
@@ -59,15 +57,18 @@ public class ClienteRepository extends CRUDRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao atualizar Cliente", e);
         }
+
+        return cliente;
     }
 
+    @Override
     public List<Cliente> buscarTodos() {
         List<Cliente> clientes = new ArrayList<>();
 
         String sql = "select * from cliente";
 
 
-        Connection conexao = criarConexao();
+        Connection conexao = FabricaDeConexao.criarConexao();
         PreparedStatement declaracaoPreparada =
                 criarDeclaracaoPreparada(conexao, sql);
 
@@ -89,10 +90,12 @@ public class ClienteRepository extends CRUDRepository {
         return clientes;
     }
 
+    @Override
+
     public Cliente buscarPorId(Long id) {
         String sql = "select * from cliente where id = ?";
 
-        Connection conexao = criarConexao();
+        Connection conexao = FabricaDeConexao.criarConexao();
         PreparedStatement declaracaoPreparada =
                 criarDeclaracaoPreparada(conexao, sql);
 
@@ -115,10 +118,11 @@ public class ClienteRepository extends CRUDRepository {
         return null;
     }
 
+    @Override
     public void deletar(Long id) {
         String sql = "delete from cliente where id = ?";
 
-        Connection conexao = criarConexao();
+        Connection conexao = FabricaDeConexao.criarConexao();
         PreparedStatement declaracaoPreparada =
                 criarDeclaracaoPreparada(conexao, sql);
 
