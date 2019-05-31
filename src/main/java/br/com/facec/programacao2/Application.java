@@ -18,29 +18,32 @@ public class Application {
         inicializacaoRepository.criarTabelaCliente();
         inicializacaoRepository.criarTabelaFuncionario();
 
-//        ClienteRepository clienteRepository
-//                = new ClienteRepository();
-//
-//        Cliente cliente = new Cliente();
-//        cliente.setNome("Cliente 1");
-//
-//        clienteRepository.criar(cliente);
-//
-//        System.out.println(cliente);
+        ClienteRepository clienteRepository
+                = new ClienteRepository();
 
-//        List<Cliente> clientes = clienteRepository.buscarTodos();
-//
-//        clienteRepository.deletar(1L);
-//
-//        Cliente cliente3 = new Cliente();
-//        cliente3.setId(3L);
-//        cliente3.setNome("Cliente 3");
-//        clienteRepository.atualizar(cliente3);
-//
-//        System.out.println(clientes);
-//
-//        Cliente clienteBuscadoPorId = clienteRepository.buscarPorId(2L);
-//        System.out.println(clienteBuscadoPorId);
+        Cliente cliente = new Cliente();
+        cliente.setNome("Cliente 1");
+
+        clienteRepository.criar(cliente);
+
+        System.out.println(cliente);
+
+
+
+        clienteRepository.deletar(1L);
+
+        Cliente cliente3 = new Cliente();
+        cliente3.setId(3L);
+        cliente3.setNome("Cliente 3");
+        clienteRepository.atualizar(cliente3);
+
+        System.out.println("----------- TODOS CLIENTES -------");
+        List<Cliente> clientes = clienteRepository.buscarTodos();
+        System.out.println(clientes);
+        System.out.println("------------------");
+
+        Cliente clienteBuscadoPorId = clienteRepository.buscarPorId(2L);
+        System.out.println(clienteBuscadoPorId);
 
         FuncionarioRepository funcionarioRepository = new FuncionarioRepository();
 

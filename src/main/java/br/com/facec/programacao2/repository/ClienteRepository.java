@@ -40,20 +40,16 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
 
     @Override
     public Cliente atualizar(Cliente cliente) {
-        String sql = "update cliente set nome = ? where id = ?";
+        try(Connection conexao = FabricaDeConexao.criarConexao()) {
+            String sql = "update cliente set nome = ? where id = ?";
 
-        Connection conexao = FabricaDeConexao.criarConexao();
-        PreparedStatement declaracaoPreparada =
-                criarDeclaracaoPreparada(conexao, sql);
+            PreparedStatement declaracaoPreparada =
+                    conexao.prepareStatement(sql);
 
-        try {
             declaracaoPreparada.setString(1, cliente.getNome());
             declaracaoPreparada.setLong(2, cliente.getId());
 
             declaracaoPreparada.execute();
-
-            declaracaoPreparada.close();
-            conexao.close();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao atualizar Cliente", e);
         }
@@ -67,21 +63,16 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
 
         String sql = "select * from cliente";
 
+        try(Connection conexao = FabricaDeConexao.criarConexao()) {
+            PreparedStatement declaracaoPreparada =
+                conexao.prepareStatement(sql);
 
-        Connection conexao = FabricaDeConexao.criarConexao();
-        PreparedStatement declaracaoPreparada =
-                criarDeclaracaoPreparada(conexao, sql);
-
-        try {
-            ResultSet resultSet = declaracaoPreparada
+            ResultSet resultado = declaracaoPreparada
                     .executeQuery();
 
-            while (resultSet.next()) {
-                clientes.add(MapeadorCliente.mapear(resultSet));
+            while (resultado.next()) {
+                clientes.add(MapeadorCliente.mapear(resultado));
             }
-
-            declaracaoPreparada.close();
-            conexao.close();
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar cliente", e);
@@ -91,21 +82,19 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
     }
 
     @Override
-
     public Cliente buscarPorId(Long id) {
-        String sql = "select * from cliente where id = ?";
+        try(Connection conexao = FabricaDeConexao.criarConexao()) {
+            String sql = "select * from cliente where id = ?";
 
-        Connection conexao = FabricaDeConexao.criarConexao();
-        PreparedStatement declaracaoPreparada =
-                criarDeclaracaoPreparada(conexao, sql);
+            PreparedStatement declaracaoPreparada =
+                       conexao.prepareStatement(sql);
 
-        try {
             declaracaoPreparada.setLong(1, id);
 
-            ResultSet resultSet = declaracaoPreparada.executeQuery();
+            ResultSet resultado = declaracaoPreparada.executeQuery();
 
-            while (resultSet.next()) {
-                return MapeadorCliente.mapear(resultSet);
+            while (resultado.next()) {
+                return MapeadorCliente.mapear(resultado);
             }
 
             declaracaoPreparada.close();
@@ -120,18 +109,15 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
 
     @Override
     public void deletar(Long id) {
-        String sql = "delete from cliente where id = ?";
 
-        Connection conexao = FabricaDeConexao.criarConexao();
-        PreparedStatement declaracaoPreparada =
-                criarDeclaracaoPreparada(conexao, sql);
+        try(Connection conexao = FabricaDeConexao.criarConexao()) {
+            String sql = "delete from cliente where id = ?";
 
-        try {
+            PreparedStatement declaracaoPreparada =
+                    conexao.prepareStatement(sql);
+
             declaracaoPreparada.setLong(1, id);
             declaracaoPreparada.execute();
-
-            declaracaoPreparada.close();
-            conexao.close();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao deletar cliente", e);
         }
