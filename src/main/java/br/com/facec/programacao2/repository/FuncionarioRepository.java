@@ -15,7 +15,6 @@ public class FuncionarioRepository extends CRUDRepository<Funcionario> {
 
     @Override
     public Funcionario criar(Funcionario funcionario) {
-
        try(Connection conexao = FabricaDeConexao.criarConexao()) {
 
            String[] colunasParaRetornar = {"id"};

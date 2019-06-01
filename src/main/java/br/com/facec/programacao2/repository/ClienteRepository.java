@@ -96,10 +96,6 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
             while (resultado.next()) {
                 return MapeadorCliente.mapear(resultado);
             }
-
-            declaracaoPreparada.close();
-            conexao.close();
-
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar cliente por id", e);
         }
@@ -109,7 +105,6 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
 
     @Override
     public void deletar(Long id) {
-
         try(Connection conexao = FabricaDeConexao.criarConexao()) {
             String sql = "delete from cliente where id = ?";
 

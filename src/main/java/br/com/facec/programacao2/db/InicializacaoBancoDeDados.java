@@ -1,4 +1,4 @@
-package br.com.facec.programacao2.repository;
+package br.com.facec.programacao2.db;
 
 import br.com.facec.programacao2.db.FabricaDeConexao;
 
@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class InicializacaoRepository {
+public class InicializacaoBancoDeDados {
 
     public void criarTabelaCliente() {
         String sql = "create table if not exists cliente(" +

@@ -9,8 +9,8 @@ import static br.com.facec.programacao2.exceptions.ValidacaoUtil.validarEntidade
 
 public class Atendimento extends Entidade implements Validavel {
 
-    private Pessoa cliente;
-    private Pessoa funcionario;
+    private Cliente cliente;
+    private Funcionario funcionario;
     private String descricaoProblema;
     private LocalDateTime dataHora = LocalDateTime.now();
     private StatusAtendimento status = StatusAtendimento.ABERTO;
@@ -28,19 +28,19 @@ public class Atendimento extends Entidade implements Validavel {
         this.status = StatusAtendimento.ENCERRADO;
     }
 
-    public Pessoa getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Pessoa cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    public Pessoa getFuncionario() {
+    public Funcionario getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(Pessoa funcionario) {
+    public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
     }
 
@@ -56,8 +56,16 @@ public class Atendimento extends Entidade implements Validavel {
         return dataHora;
     }
 
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
+
     public StatusAtendimento getStatus() {
         return status;
+    }
+
+    public void setStatus(StatusAtendimento status) {
+        this.status = status;
     }
 
     @Override

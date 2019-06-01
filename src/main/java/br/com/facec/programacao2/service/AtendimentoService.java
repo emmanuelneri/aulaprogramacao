@@ -13,10 +13,10 @@ public class AtendimentoService {
 
     public Atendimento inicializar(Pessoa cliente, String descricaoProblema, Pessoa funcionario) {
         Atendimento atendimento = new Atendimento();
-        atendimento.setCliente(cliente);
-        atendimento.setFuncionario(funcionario);
-        atendimento.setDescricaoProblema(descricaoProblema);
-        atendimento.validar();
+//        atendimento.setCliente(cliente);
+//        atendimento.setFuncionario(funcionario);
+//        atendimento.setDescricaoProblema(descricaoProblema);
+//        atendimento.validar();
 //        atendimentoRepository.criar(atendimento);
         return atendimento;
     }
@@ -26,9 +26,9 @@ public class AtendimentoService {
             atendimento.setDescricaoProblema(descricaoProblema);
         }
 
-        if(funcionario != null) {
-            atendimento.setFuncionario(funcionario);
-        }
+//        if(funcionario != null) {
+//            atendimento.setFuncionario(funcionario);
+//        }
 
 //        atendimentoRepository.atualizar(atendimento);
 

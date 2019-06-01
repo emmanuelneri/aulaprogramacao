@@ -1,10 +1,13 @@
 package br.com.facec.programacao2;
 
+import br.com.facec.programacao2.model.Atendimento;
 import br.com.facec.programacao2.model.Cliente;
 import br.com.facec.programacao2.model.Funcionario;
+import br.com.facec.programacao2.model.StatusAtendimento;
+import br.com.facec.programacao2.repository.AtendimentoRepository;
 import br.com.facec.programacao2.repository.ClienteRepository;
 import br.com.facec.programacao2.repository.FuncionarioRepository;
-import br.com.facec.programacao2.repository.InicializacaoRepository;
+import br.com.facec.programacao2.db.InicializacaoBancoDeDados;
 
 import java.util.List;
 
@@ -12,11 +15,12 @@ public class Application {
 
     public static void main(String[] args) {
 
-        InicializacaoRepository inicializacaoRepository
-                = new InicializacaoRepository();
+        InicializacaoBancoDeDados inicializacaoBancoDeDados
+                = new InicializacaoBancoDeDados();
 
-        inicializacaoRepository.criarTabelaCliente();
-        inicializacaoRepository.criarTabelaFuncionario();
+        inicializacaoBancoDeDados.criarTabelaCliente();
+        inicializacaoBancoDeDados.criarTabelaFuncionario();
+        inicializacaoBancoDeDados.criarTabelaAtendimento();
 
         ClienteRepository clienteRepository
                 = new ClienteRepository();
@@ -27,8 +31,6 @@ public class Application {
         clienteRepository.criar(cliente);
 
         System.out.println(cliente);
-
-
 
         clienteRepository.deletar(1L);
 
@@ -66,6 +68,31 @@ public class Application {
                 .forEach(System.out::println);
 
         System.out.println("------------------------------------");
+
+
+        AtendimentoRepository atendimentoRepository = new AtendimentoRepository();
+
+        Atendimento atendimento = new Atendimento();
+        atendimento.setCliente(cliente);
+        atendimento.setFuncionario(funcionario);
+        atendimento.setDescricaoProblema("Problema");
+        atendimento.setStatus(StatusAtendimento.ABERTO);
+
+        atendimentoRepository.criar(atendimento);
+
+        atendimento.setStatus(StatusAtendimento.ENCERRADO);
+        atendimentoRepository.atualizar(atendimento);
+
+
+        System.out.println("---------------TODOS atendimentos---------");
+
+        atendimentoRepository.buscarTodos()
+                .forEach(System.out::println);
+
+        System.out.println("------------------------------------");
+
+
+        System.out.println(atendimentoRepository.buscarPorId(atendimento.getId()));
     }
 
 }
