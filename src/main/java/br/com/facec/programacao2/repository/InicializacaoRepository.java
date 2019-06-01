@@ -26,6 +26,21 @@ public class InicializacaoRepository {
         criarTabela(sql);
     }
 
+    public void criarTabelaAtendimento() {
+        String sql = "create table if not exists atendimento(" +
+                "id bigserial primary key," +
+                "id_cliente bigint not null," +
+                "id_funcionario bigint not null," +
+                "data_hora timestamp not null," +
+                "descricao_problema varchar(100)," +
+                "status varchar(50) not null," +
+                " CONSTRAINT atendimento_id_cliente_fk FOREIGN KEY (id_cliente) REFERENCES cliente(id)," +
+                " CONSTRAINT atendimento_id_funcionario_fk FOREIGN KEY (id_funcionario) REFERENCES funcionario(id)" +
+                ");";
+
+        criarTabela(sql);
+    }
+
     private void criarTabela(final String sql) {
         Connection conexao = FabricaDeConexao.criarConexao();
 
