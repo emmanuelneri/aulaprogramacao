@@ -1,7 +1,7 @@
 package br.com.facec.programacao2.repository;
 
 import br.com.facec.programacao2.db.FabricaDeConexao;
-import br.com.facec.programacao2.exceptions.TratamentoCodigosPostgresSQL;
+import br.com.facec.programacao2.exceptions.TratamentoErrosPostgresSQL;
 import br.com.facec.programacao2.model.Funcionario;
 import br.com.facec.programacao2.repository.mapeadores.MapeadorFuncionario;
 
@@ -33,7 +33,7 @@ public class FuncionarioRepository extends CRUDRepository<Funcionario> {
                funcionario.setId(colunasRetornadas.getLong(1));
            }
        } catch (SQLException ex) {
-           throw new RuntimeException("Erro ao criar funcionário");
+           TratamentoErrosPostgresSQL.tratarAtualizacao(ex, "Funcionario");
        }
 
         return funcionario;
@@ -51,7 +51,7 @@ public class FuncionarioRepository extends CRUDRepository<Funcionario> {
             declaracaoPreparada.setLong(2, funcionario.getId());
             declaracaoPreparada.execute();
         } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao atualizar funcionário");
+            TratamentoErrosPostgresSQL.tratarAtualizacao(ex, "Funcionario");
         }
 
         return funcionario;
@@ -113,7 +113,7 @@ public class FuncionarioRepository extends CRUDRepository<Funcionario> {
             declaracaoPreparada.execute();
 
         } catch (SQLException ex) {
-            TratamentoCodigosPostgresSQL.tratar(ex, "Funcionario");
+            TratamentoErrosPostgresSQL.tratarExclusao(ex, "Funcionario");
 
         }
     }

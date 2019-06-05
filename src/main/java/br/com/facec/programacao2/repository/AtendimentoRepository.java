@@ -1,7 +1,7 @@
 package br.com.facec.programacao2.repository;
 
 import br.com.facec.programacao2.db.FabricaDeConexao;
-import br.com.facec.programacao2.exceptions.TratamentoCodigosPostgresSQL;
+import br.com.facec.programacao2.exceptions.TratamentoErrosPostgresSQL;
 import br.com.facec.programacao2.model.Atendimento;
 import br.com.facec.programacao2.model.Cliente;
 import br.com.facec.programacao2.model.Funcionario;
@@ -39,7 +39,7 @@ public class AtendimentoRepository extends CRUDRepository<Atendimento> {
                 atendimento.setId(colunasRetornadas.getLong(1));
             }
         } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao criar atendimento");
+            TratamentoErrosPostgresSQL.tratarAtualizacao(ex, "Atendimento");
         }
 
         return atendimento;
@@ -68,7 +68,7 @@ public class AtendimentoRepository extends CRUDRepository<Atendimento> {
                 atendimento.setId(colunasRetornadas.getLong(1));
             }
         } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao criar atendimento", ex);
+            TratamentoErrosPostgresSQL.tratarAtualizacao(ex, "Atendimento");
         }
 
         return atendimento;
@@ -138,7 +138,7 @@ public class AtendimentoRepository extends CRUDRepository<Atendimento> {
             declaracaoPreparada.setLong(1, id);
             declaracaoPreparada.execute();
         } catch (SQLException e) {
-            TratamentoCodigosPostgresSQL.tratar(e, "Atendimento");
+            TratamentoErrosPostgresSQL.tratarExclusao(e, "Atendimento");
         }
     }
 }

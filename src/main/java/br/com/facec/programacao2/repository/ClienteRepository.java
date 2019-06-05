@@ -1,7 +1,7 @@
 package br.com.facec.programacao2.repository;
 
 import br.com.facec.programacao2.db.FabricaDeConexao;
-import br.com.facec.programacao2.exceptions.TratamentoCodigosPostgresSQL;
+import br.com.facec.programacao2.exceptions.TratamentoErrosPostgresSQL;
 import br.com.facec.programacao2.model.Cliente;
 import br.com.facec.programacao2.repository.mapeadores.MapeadorCliente;
 
@@ -32,8 +32,8 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
             if(colunasRetornadas.next()) {
                 cliente.setId(colunasRetornadas.getLong(1));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao conectar ao banco de dados", e);
+        } catch (SQLException ex) {
+            TratamentoErrosPostgresSQL.tratarAtualizacao(ex, "Cliente");
         }
 
         return cliente;
@@ -51,8 +51,8 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
             declaracaoPreparada.setLong(2, cliente.getId());
 
             declaracaoPreparada.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar Cliente", e);
+        } catch (SQLException ex) {
+            TratamentoErrosPostgresSQL.tratarAtualizacao(ex, "Cliente");
         }
 
         return cliente;
@@ -115,7 +115,7 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
             declaracaoPreparada.setLong(1, id);
             declaracaoPreparada.execute();
         } catch (SQLException e) {
-            TratamentoCodigosPostgresSQL.tratar(e, "Cliente");
+            TratamentoErrosPostgresSQL.tratarExclusao(e, "Cliente");
         }
     }
 }
