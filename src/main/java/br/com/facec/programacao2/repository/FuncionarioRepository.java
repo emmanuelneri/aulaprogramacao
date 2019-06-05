@@ -1,6 +1,7 @@
 package br.com.facec.programacao2.repository;
 
 import br.com.facec.programacao2.db.FabricaDeConexao;
+import br.com.facec.programacao2.exceptions.TratamentoCodigosPostgresSQL;
 import br.com.facec.programacao2.model.Funcionario;
 import br.com.facec.programacao2.repository.mapeadores.MapeadorFuncionario;
 
@@ -112,7 +113,8 @@ public class FuncionarioRepository extends CRUDRepository<Funcionario> {
             declaracaoPreparada.execute();
 
         } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao deletar funcionario: " + id);
+            TratamentoCodigosPostgresSQL.tratar(ex, "Funcionario");
+
         }
     }
 }

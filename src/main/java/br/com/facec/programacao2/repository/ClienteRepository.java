@@ -1,6 +1,7 @@
 package br.com.facec.programacao2.repository;
 
 import br.com.facec.programacao2.db.FabricaDeConexao;
+import br.com.facec.programacao2.exceptions.TratamentoCodigosPostgresSQL;
 import br.com.facec.programacao2.model.Cliente;
 import br.com.facec.programacao2.repository.mapeadores.MapeadorCliente;
 
@@ -114,7 +115,7 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
             declaracaoPreparada.setLong(1, id);
             declaracaoPreparada.execute();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao deletar cliente", e);
+            TratamentoCodigosPostgresSQL.tratar(e, "Cliente");
         }
     }
 }
