@@ -62,11 +62,6 @@ public class AtendimentoRepository extends CRUDRepository<Atendimento> {
             declaracaoPreparada.setLong(6, atendimento.getId());
             declaracaoPreparada.execute();
 
-            ResultSet colunasRetornadas = declaracaoPreparada.getGeneratedKeys();
-
-            if(colunasRetornadas.next()) {
-                atendimento.setId(colunasRetornadas.getLong(1));
-            }
         } catch (SQLException ex) {
             TratamentoErrosPostgresSQL.tratarAtualizacao(ex, "Atendimento");
         }
