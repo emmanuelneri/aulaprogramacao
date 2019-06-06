@@ -5,6 +5,7 @@ import java.sql.SQLException;
 public final class TratamentoErrosPostgresSQL {
 
     private static final String CODIGO_ERRO_CHAVE_ESTRANGEIRA = "23503";
+    private static final String CODIGO_ERRO_CAMPO_OBRIGATORIO = "23502";
     private static final String CODIGO_ERRO_CHAVE_UNICA = "23505";
 
     private TratamentoErrosPostgresSQL() {}
@@ -20,6 +21,10 @@ public final class TratamentoErrosPostgresSQL {
     public static void tratarAtualizacao(SQLException sqlEx, String nomeTabela) {
         if(sqlEx.getSQLState().equals(CODIGO_ERRO_CHAVE_UNICA)) {
             throw new RuntimeException("Registro não pode ser inserido ou atualizado, viola a chave única da tabela: " + nomeTabela);
+        }
+
+        if(sqlEx.getSQLState().equals(CODIGO_ERRO_CAMPO_OBRIGATORIO)) {
+            throw new RuntimeException("Registro não pode ser inserido ou atualizado, possui campos obrigatórios não preenchidos: " + nomeTabela, sqlEx);
         }
 
         throw new RuntimeException("Erro ao inserior ou atualizar. Tabela: " + nomeTabela, sqlEx);
