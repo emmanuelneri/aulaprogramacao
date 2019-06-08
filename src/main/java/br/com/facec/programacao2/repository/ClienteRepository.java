@@ -72,7 +72,7 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
                     .executeQuery();
 
             while (resultado.next()) {
-                clientes.add(MapeadorCliente.mapear(resultado));
+                clientes.add(MapeadorCliente.build().mapear(resultado));
             }
 
         } catch (SQLException e) {
@@ -95,7 +95,7 @@ public class ClienteRepository extends CRUDRepository<Cliente> {
             ResultSet resultado = declaracaoPreparada.executeQuery();
 
             while (resultado.next()) {
-                return MapeadorCliente.mapear(resultado);
+                return MapeadorCliente.build().mapear(resultado);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar cliente por id", e);

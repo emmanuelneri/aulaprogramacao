@@ -1,7 +1,5 @@
 package br.com.facec.programacao2.db;
 
-import br.com.facec.programacao2.db.FabricaDeConexao;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

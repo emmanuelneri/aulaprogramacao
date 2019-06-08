@@ -8,7 +8,7 @@ import br.com.facec.programacao2.model.StatusAtendimento;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public final class MapeadorAtendimento {
+public final class MapeadorAtendimento implements Mapeador<Atendimento> {
 
     private static final String COLUNA_ID = "id";
     private static final String COLUNA_DESCRICAO_PROBLEMA = "descricao_problema";
@@ -17,7 +17,11 @@ public final class MapeadorAtendimento {
 
     private MapeadorAtendimento() {}
 
-    public static Atendimento mapear(ResultSet resultado) throws SQLException {
+    public static MapeadorAtendimento build() {
+        return new MapeadorAtendimento();
+    }
+
+    public Atendimento mapear(ResultSet resultado) throws SQLException {
         Cliente cliente = new Cliente();
         cliente.setId(resultado.getLong("id_cliente"));
         cliente.setNome(resultado.getString("nome_cliente"));

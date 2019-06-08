@@ -70,7 +70,7 @@ public class FuncionarioRepository extends CRUDRepository<Funcionario> {
             ResultSet resultado = declaracaoPreparada.executeQuery();
 
             while (resultado.next()) {
-                funcionarios.add(MapeadorFuncionario.mapear(resultado));
+                funcionarios.add(MapeadorFuncionario.build().mapear(resultado));
             }
 
         } catch (SQLException ex) {
@@ -92,7 +92,7 @@ public class FuncionarioRepository extends CRUDRepository<Funcionario> {
             ResultSet resultado = declaracaoPreparada.executeQuery();
 
             while (resultado.next()) {
-                return MapeadorFuncionario.mapear(resultado);
+                return MapeadorFuncionario.build().mapear(resultado);
             }
 
         } catch (SQLException ex) {

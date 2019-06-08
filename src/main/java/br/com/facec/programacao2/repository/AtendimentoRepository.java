@@ -88,7 +88,7 @@ public class AtendimentoRepository extends CRUDRepository<Atendimento> {
                     .executeQuery();
 
             while (resultado.next()) {
-                atendimentos.add(MapeadorAtendimento.mapear(resultado));
+                atendimentos.add(MapeadorAtendimento.build().mapear(resultado));
             }
 
         } catch (SQLException e) {
